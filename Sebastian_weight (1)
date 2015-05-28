@@ -23,3 +23,25 @@ weight=[80.,85,200,85,69,65,68,66,85,72,85,82,65,105,75,80,
 
 
 print mean(weight)
+
+def calculate_weight(data, z):
+    extracted_data = []
+    sorted_data = sorted(data)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+    N = len(sorted_data)
+    N1 = int(0.25*N)-1
+    N2 = int(0.75*N)+1
+    for i in range(N1,N2):
+        extracted_data.append(sorted_data[i])
+        
+    print N, N1, N2
+    new_mean = mean(extracted_data)
+    std_dev = stddev(extracted_data)
+    x = z * std_dev + new_mean
+    # remove outliers
+    # extract data between lower and upper quartile
+    # fit Gaussian using MLE
+    # compute x that corresponds to standard score z
+    return x
+
+
+print calculate_weight(weight, -2.)
