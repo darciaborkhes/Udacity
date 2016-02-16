@@ -1,0 +1,75 @@
+
+def daysBetweenDates(year1, month1, day1, year2, month2, day2):
+    result_year = 0
+
+    if year1 != year2:
+        i = year1
+        while i < year2:
+            days_in_year = LeapYear(i)
+            result_year = result_year + days_in_year
+            i = i +1
+        days_in_first_year = DaysOfYear1(day1, month1, year1)
+        days_in_last_year = DaysOfYear2(day2, month2,year2)
+        result = result_year - days_in_first_year + days_in_last_year
+    elif year1 == year2 and month1 != month2:
+        m = month1
+        total_month = 0
+        while m < month2:
+            days = LeapMonth(m,year1)
+            m = m+1
+            total_month = total_month+days
+
+        result = total_month - day1 +day2
+    elif year1 == year2 and month1 == month2:
+        result = day2 - day1
+    return result
+
+def LeapYear(year):
+    if year % 4 !=0:
+        year_bool = False
+        days_in_year = 365
+    elif year %100 !=0:
+        year_bool = True
+        days_in_year = 366
+    elif year%400 !=0:
+        year_bool = False
+        days_in_year = 365
+    else:
+        days_in_year = 366
+        year_bool = True
+    return days_in_year
+
+def LeapMonth(month, year):
+    days_in_month = 0
+    if month==1 or month == 3 or month ==5 or month ==7 or month ==8 or month==10 or month ==12:
+            days_in_month=31
+    elif month ==4 or month ==6 or month==9 or month ==11:
+            days_in_month=30
+    elif month ==2:
+        if LeapYear(year) == 366:
+            days_in_month = 29
+        elif LeapYear(year) == 365:
+            days_in_month = 28
+    return days_in_month
+
+def DaysOfYear1(day, month, year):
+    result_month = 0
+    l = month
+    while l < 13:
+        days = LeapMonth(l, year)
+        result_month = result_month + days
+        l = l +1
+    lastday_month = LeapMonth(month,year)
+    in_year = LeapYear(year)
+    n_days_before = in_year - (result_month - day)
+    return n_days_before
+
+def DaysOfYear2(day, month, year):
+    result_month = 0
+    k = 1
+    while k < month:
+        days = LeapMonth(k, year)
+        result_month = result_month + days
+        k = k +1
+    n_days_after = result_month + day
+    return n_days_after
